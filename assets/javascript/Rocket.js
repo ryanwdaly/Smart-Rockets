@@ -1,9 +1,11 @@
 class Rocket {
     constructor(lifespan) {
+        this.dna = new DNA(lifespan);
         this.pos = createVector(width/2, height);
         this.vel = createVector();
         this.acc = createVector();
-        this.dna = new DNA(lifespan);
+        this.completed = false;
+        this.crashed = false;
         this.fitness = 0;
 
     }
@@ -11,11 +13,20 @@ class Rocket {
         this.acc.add(force)
     }
     update(count) {
-
+        let d = dist(this.pos.x, this.pos.y, target.y);
+        if (d < 10) {
+            this.completed = true;
+        }
+        if (ths.pos.x > rx && this.pos.x < rx + rw && this.pos.y > ry 
+            && this.pos.y < ry + rh) {
+            this.crashed = true;
+        }
         this.applyForce(this.dna.genes[count]);
-        this.vel.add(this.acc);
-        this.pos.add(this.vel);
-        this.acc.mult(0);
+        if (!this.completed && !this.crashed) {
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0);
+        }
     }
     show() {
         push();
@@ -28,5 +39,9 @@ class Rocket {
     calcFitness() {
         let d = dist(this.pos.x, this.pos.y, target.x, target.y)
         this.fitness = 1/d;
+        if (this.completed) {
+            this.fitness += 100
+        }
+
     }
 }

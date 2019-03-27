@@ -37,6 +37,7 @@ class Population {
         let parentB = random(this.matingPool);
         let child = new Rocket()
         child.dna.genes = this.crossover(parentA, parentB);
+        child.dna.mutate(mutationRate);
         return child;
     }
     generateNextGen() {

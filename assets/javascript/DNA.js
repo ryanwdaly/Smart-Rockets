@@ -18,9 +18,11 @@ class DNA {
        this.fitness = score / target.length;
    }
     mutate(mutationRate) {
+        
         for (let i = 0; i < this.genes.length; i++) {
             if (Math.random() <= mutationRate) {
-                this.genes[i] = getRandomChar(63, 123);
+                console.log("mutation!")
+                this.genes[i] = p5.Vector.random2D();
             }
         }
     }
