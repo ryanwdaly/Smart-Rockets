@@ -1,11 +1,11 @@
-// -Create target var and pass it into rocket
+
 // -pretty it up
 // -the length of time it take to get to the rocket affects fitness
-// -obsitcles
+// -make sketch a class and fix variable declarations ????
 
-const popSize = 50;
+const popSize = 200;
 const mutationRate = 0.001;
-const lifespan = 250;
+const lifespan = 100;
 
 var target;
 var rocket;
@@ -14,10 +14,12 @@ var lifeP;
 var count = 0; 
 var generation = 1;
 var cnv;
-var rx = 100;
-var ry = 150;
-var rw = 200;
-var rh = 10
+
+var barrierx;
+var barriery;
+var barrierw;
+var barrierh;
+
 
 function setup() {
     // // frameRate(10)
@@ -30,12 +32,17 @@ function setup() {
     lifeP = createP();
     genP = createP();
     target = createVector(width/2, 50)
+
+    barrierw = width/3;
+    barrierh = 10;    
+    barrierx = (width - barrierw) / 2;
+    barriery = (height - barrierh) / 2;
 }
 function draw() {
     background(0);
     ellipse(target.x, target.y, 16, 16)
     fill(255);
-    rect(rx, ry, rw, rh);
+    rect(barrierx, barriery, barrierw, barrierh);
     
     if (count === lifespan) {
         generation++;

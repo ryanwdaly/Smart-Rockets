@@ -13,16 +13,22 @@ class Rocket {
         this.acc.add(force)
     }
     update(count) {
-        let d = dist(this.pos.x, this.pos.y, target.y);
+        let d = dist(this.pos.x, this.pos.y, target.x, target.y);
+        
+        // did it reach the target?
         if (d < 10) {
             this.completed = true;
         }
-        if (ths.pos.x > rx && this.pos.x < rx + rw && this.pos.y > ry 
-            && this.pos.y < ry + rh) {
-            this.crashed = true;
-        }
-        this.applyForce(this.dna.genes[count]);
+        
+        // did it crash?
+        if (this.pos.x > barrierx && this.pos.x < barrierx + barrierw 
+            && this.pos.y > barriery && this.pos.y < barriery + barrierh) {
+                this.crashed = true;
+            }
+            
+        // if neither crashed nor complete, carry on    
         if (!this.completed && !this.crashed) {
+            this.applyForce(this.dna.genes[count]);
             this.vel.add(this.acc);
             this.pos.add(this.vel);
             this.acc.mult(0);
@@ -39,9 +45,7 @@ class Rocket {
     calcFitness() {
         let d = dist(this.pos.x, this.pos.y, target.x, target.y)
         this.fitness = 1/d;
-        if (this.completed) {
-            this.fitness += 100
-        }
-
+        if (this.crashed) this.fitness = 0;
+        if (this.completed) this.fitness += 0.5
     }
 }
